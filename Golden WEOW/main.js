@@ -35,7 +35,7 @@ function cyrb53(str, seed = 0) {
 	return 4294967296 * (2097151 & h2) + (h1>>>0);
 }
 
-function getMessageHash(messageElem) {
+function getMessageHash(messageElem, weows) {
 	const time = messageElem.querySelector('.time').getAttribute('title');
 	const username = messageElem.dataset.username;
 	const message = messageElem.querySelector('.text').innerText;
@@ -43,17 +43,16 @@ function getMessageHash(messageElem) {
 	const timeStamp = parseDate(time);
 	const hashUsername = cyrb53(username);
 	const hashMessage = cyrb53(message);
-	const hash = timeStamp + hashUsername + hashMessage;
+	const hash = (timeStamp + hashUsername + hashMessage) % (Number.MAX_SAFE_INTEGER - weows.length);
 	return hash;
 }
 
 function isGoldenWeow(hash) {
-	console.log(hash);
 	return hash % GOLDEN_WEOW_CHANCE === 0;
 }
 
 function goldenWeowHandler(messageElem, weows) {
-	const messageHash = getMessageHash(messageElem);
+	const messageHash = getMessageHash(messageElem, weows);
 	for (let i = 0; i < weows.length; i++) {
 		if (isGoldenWeow(messageHash + i)) {
 			weows[i].classList.add('voiture-golden-weow');
