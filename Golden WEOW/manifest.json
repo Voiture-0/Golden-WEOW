@@ -1,7 +1,7 @@
 {
   "name": "Golden WEOW",
   "description": "Adds Golden WEOWs to Destiny.gg chat",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "manifest_version": 3,
   "icons": {
     "32": "res/icon32.png",
@@ -11,7 +11,6 @@
   "content_scripts": [
     {
       "matches": ["https://*.destiny.gg/*"],
-      "css": ["styles.css"],
       "js": ["main.js"]
     }
   ]

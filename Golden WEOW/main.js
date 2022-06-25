@@ -1,5 +1,20 @@
 const GOLDEN_WEOW_CHANCE = 100; // 1 in a 100 chance
-let chat = document.getElementById('chat-win-main')
+let chat = document.getElementById('chat-win-main');
+
+function createStyleElement() {
+  const style = document.createElement('style');
+  style.id = 'voiture-golden-weow-styles';
+  style.innerHTML = `
+  .voiture-golden-weow {
+    transition: filter 500ms ease-in-out;
+    filter: contrast(1) sepia(0.1) saturate(22) drop-shadow(0px 0px 4px #ffe85f);
+  }
+  .voiture-golden-weow:hover {
+    filter: contrast(1) sepia(0.1) saturate(22) drop-shadow(0px 0px 13px #ffe85f);
+  }
+  `;
+  return style;
+}
 
 function parseDate(str) {
   const timeStampStr = str
@@ -86,6 +101,9 @@ function observeChat() {
   });
 }
 
+function injectStyles(doc) {
+  doc.head.appendChild(createStyleElement());
+}
 function loadChatFromBigScreen(iframe) {
   const newChat = iframe.contentDocument.getElementById('chat-win-main');
   const isNew = chat !== newChat;
@@ -107,15 +125,18 @@ function main() {
     ?.querySelector('iframe');
   if (iframe != null) {
     // on /BigScreen
-    loadChatFromBigScreen(iframe);
     iframe.addEventListener('load', e => {
       if (loadChatFromBigScreen(iframe)) {
-        observeChat();  
+        observeChat();
+        injectStyles(iframe.contentDocument);
       }
     });
+    loadChatFromBigScreen(iframe);
+    injectStyles(iframe.contentDocument);
   } else {
     // on /embed/chat
     loadChatFromEmbedChat();
+    injectStyles(document);
   }
   if (chat == null) return; // Probably not on /bigscreen or /embed/chat, or not loaded yet on bigscreen
   observeChat();
