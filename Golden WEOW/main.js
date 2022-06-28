@@ -28,7 +28,7 @@ function parseDate(str) {
   const hour   = parseInt(timeStampStr[3]) + (timeStampStr[6] === 'pm' ? 12 : 0);
   const minute = timeStampStr[4];
   const second = timeStampStr[5];
-  const timeStamp = Date.parse(`${day} ${month} ${year} ${hour}:${minute}:${second}`) / 1000;
+  const timeStamp = Date.parse(`${day} ${month} ${year} ${hour}:${minute}:${second} UTC`) / 1000;
   return timeStamp;
 }
 
