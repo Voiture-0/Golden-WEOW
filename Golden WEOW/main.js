@@ -1,5 +1,5 @@
 (function() {
-  const GOLDEN_WEOW_CHANCE = 1; // 1 in a 126 chance (or ~0.79%)
+  const GOLDEN_WEOW_CHANCE = 126; // 1 in a 126 chance (or ~0.79%)
   const chatId = 'chat-win-main';
   const goldenWeowClass = 'voiture-golden-weow';
   let chat = document.getElementById(chatId);
